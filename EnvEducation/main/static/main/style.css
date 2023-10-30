@@ -69,3 +69,25 @@ footer a:hover {
     text-decoration: none;
 }
 
+
+
+/* Custom styles for the Parental Recommendations section */
+
+#parental-recommendations {
+    background-color: #f8f9fa;
+    padding: 50px 0;
+}
+
+#parental-recommendations h4 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#parental-recommendations p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#parental-recommendations .btn {
+    margin-top: 20px;
+}
