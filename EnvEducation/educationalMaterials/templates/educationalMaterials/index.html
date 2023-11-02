@@ -1,26 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Educational Materials</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header class="bg-dark text-white text-center py-5">
-        <div class="container">
-            <h1>Environmental Education for Children</h1>
-            <nav class="mt-4">
-                <a class="mx-2 text-white" href="#about">About Us</a>
-                <a class="mx-2 text-white" href="#materials">Educational Materials</a>
-                <a class="mx-2 text-white" href="#materials">Save the Planet</a>
-                <a class="mx-2 text-white" href="#materials">Creative Tasks</a>
-                <a class="mx-2 text-white" href="#materials">Quiz</a>
-                <a class="mx-2 text-white" href="#materials">Blog</a>
-            </nav>
-        </div>
-    </header>
+{% extends "educationalMaterials/layout.html" %}
+
+
+{% block body %}
 
     <section id="materials" class="py-5">
         <div class="container">
@@ -42,7 +23,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Material Title 2</h5>
                             <p class="card-text">Description of material 2.</p>
-                            <a href="#" class="btn btn-primary">Download</a>
+                            <a href="{% url "educationalMaterials:page2" %}" class="btn btn-primary">Follow</a>
                         </div>
                     </div>
                 </div>
@@ -52,7 +33,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Material Title 3</h5>
                             <p class="card-text">Description of material 3.</p>
-                            <a href="#" class="btn btn-primary">Download</a>
+                            <a href="{% url "educationalMaterials:page3" %}" class="btn btn-primary">Follow</a>
                         </div>
                     </div>
                 </div>
@@ -60,38 +41,4 @@
         </div>
     </section>
 
-    <footer class="bg-dark text-white text-center py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#materials">Educational Materials</a></li>
-                        <li><a href="#contact">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Contact Information</h5>
-                    <p>123 Green Street</p>
-                    <p>Cityville, Earth</p>
-                    <p>Email: info@environmentaleducation.com</p>
-                    <p>Phone: +1 (123) 456-7890</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Legal</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="terms.html">Terms of Use</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <p>&copy; 2023 Environmental Education Project</p>
-    </footer>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+    {% endblock %}
