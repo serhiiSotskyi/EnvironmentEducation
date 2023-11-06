@@ -14,15 +14,17 @@
 </head>
 <body>
     <header class="bg-dark text-white text-center py-5">
-        <h1>Environmental Education for Children</h1>
-        <nav class="mt-4">
-            <a class="mx-2 text-white" href="#about">About Us</a>
-            <a class="mx-2 text-white" href="{% url 'educationalMaterials:index' %}">Educational Materials</a>
-            <a class="mx-2 text-white" href="#materials">Save the Planet</a>
-            <a class="mx-2 text-white" href="#materials">Creative Tasks</a>
-            <a class="mx-2 text-white" href="#materials">Quiz</a>
-            <a class="mx-2 text-white" href="#materials">Blog</a>
-        </nav>
+        <div class="container">
+            <h1>Environmental Education for Children</h1>
+            <nav class="mt-4">
+                <a class="mx-2 text-white" href="{% url 'main:index' %}">About Us</a>
+                <a class="mx-2 text-white" href="{% url 'educationalMaterials:index' %}">Educational Materials</a>
+                <a class="mx-2 text-white" href="#materials">Save the Planet</a>
+                <a class="mx-2 text-white" href="{% url 'creativeTask:index' %}">Creative Tasks</a>
+                <a class="mx-2 text-white" href="#materials">Quiz</a>
+                <a class="mx-2 text-white" href="{% url 'blog:index' %}">Blog</a>
+            </nav>
+        </div>
     </header>
 
     <section id="about" class="py-5">

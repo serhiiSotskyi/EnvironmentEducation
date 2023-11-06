@@ -1,0 +1,63 @@
+{% extends "educationalMaterials/layout.html" %}
+
+{% block body %}
+
+<section id="creative-tasks" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Creative Tasks</h2>
+        <div class="row">
+            <!-- Add creative tasks here (as shown in the previous example) -->
+        </div>
+    </div>
+</section>
+
+<section id="submit-ideas" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Submit Your Ideas</h2>
+        <form enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select class="form-control" id="category" required>
+                    <option value="" disabled selected>Select Category</option>
+                    <option value="Drawing">Drawing</option>
+                    <option value="Story">Story</option>
+                    <option value="Idea">Idea</option>
+                </select>
+            </div>
+            <div class="form-group" id="drawingField" style="display:none;">
+                <label for="drawingFile">Upload Drawing</label>
+                <input type="file" class="form-control-file" id="drawingFile" name="drawingFile">
+            </div>
+            <div class="form-group" id="textField" style="display:none;">
+                <label for="text">Your {Category}</label>
+                <textarea class="form-control" id="text" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</section>
+
+<script>
+    document.getElementById('category').addEventListener('change', function() {
+        var category = this.value;
+        var drawingField = document.getElementById('drawingField');
+        var textField = document.getElementById('textField');
+
+        if (category === 'Drawing') {
+            drawingField.style.display = 'block';
+            textField.style.display = 'none';
+        } else {
+            drawingField.style.display = 'none';
+            textField.style.display = 'block';
+            document.getElementById('text').setAttribute('placeholder', 'Your ' + category);
+        }
+    });
+</script>
+
+
+    
+    {% endblock %}
