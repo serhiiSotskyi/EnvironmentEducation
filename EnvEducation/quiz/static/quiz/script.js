@@ -45,7 +45,6 @@ const questionElement = document.getElementById("question");  // The element tha
 const answerButton = document.getElementById("answer-buttons");  // The container for answer buttons
 const nextButton = document.getElementById("next-btn");  // The button to move to the next question
 
-console.log(answerButton)
 let currentQuestionIndex = 0;  // Index to keep track of the current question
 let score = 0;  // Variable to keep track of the user's score
 
