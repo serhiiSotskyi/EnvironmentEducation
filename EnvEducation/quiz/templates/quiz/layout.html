@@ -19,7 +19,11 @@
                 <a class="mx-2 text-white" href="{% url 'creativeTask:index' %}">Creative Tasks</a>
                 <a class="mx-2 text-white" href="{% url 'quiz:index' %}">Quiz</a>
                 <a class="mx-2 text-white" href="{% url 'blog:index' %}">Blog</a>
-                <a class="mx-2 text-white" href="{% url 'log:logIn' %}">Login</a>
+                {% if user.is_authenticated %}
+                <a class="mx-2 text-white" href="{% url 'log:logout_user' %}">Logout</a> 
+                {% else %}
+                <a class="mx-2 text-white" href="{% url 'log:logIn_user' %}">Login</a>
+                {% endif %}
             </nav>
         </div>
     </header>
