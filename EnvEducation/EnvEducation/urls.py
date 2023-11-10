@@ -24,5 +24,6 @@ urlpatterns = [
     path("creativeTask/", include("creativeTask.urls")),
     path("blog/", include("blog.urls")),
     path("quiz/", include("quiz.urls")),
-    path("legal/", include("legal.urls"))
+    path("legal/", include("legal.urls")),
+     path("log/", include("log.urls"))
 ]
