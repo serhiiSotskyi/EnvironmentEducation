@@ -1,93 +1,80 @@
-/* Custom styles for the Environmental Education project */
+/* styles.css */
 
-body {
-    font-family: Arial, sans-serif;
-}
-
+/* Header Styles */
 header {
-    padding: 20px 0;
+    background-color: #FFD700; /* Gold */
 }
 
-nav ul {
-    list-style: none;
-    padding: 0;
+header h1 {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 2.5rem;
+    color: #2E3192; /* Dark Blue */
 }
 
-nav ul li {
-    display: inline-block;
-    margin-right: 20px;
+nav a {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 1.2rem;
+    color: #2E3192; /* Dark Blue */
 }
 
-nav ul li a {
-    text-decoration: none;
-    color: white;
+/* Alert Styles */
+.alert-environmental {
+    background-color: #FFB6C1; /* Light Pink */
+    color: #8B0000; /* Dark Red */
+    border-color: #FF69B4; /* Pink Border */
 }
 
-section {
-    padding: 50px 0;
-}
-
+/* Footer Styles */
 footer {
-    background-color: #343a40;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
+    background-color: #87CEEB; /* Sky Blue */
 }
 
-.container h2 {
-    margin-bottom: 30px;
+footer h5,
+footer p,
+footer ul li a {
+    font-family: 'Comic Sans MS', cursive;
+    color: #2E3192; /* Dark Blue */
 }
 
-.container p {
-    font-size: 18px;
+/* General Styles */
+body {
+    font-family: 'Comic Sans MS', cursive;
+    background-color: #E6E6FA; /* Lavender */
+    color: #2E3192; /* Dark Blue */
 }
 
-.bg-light {
-    background-color: #f8f9fa !important;
+h2 {
+    color: #2E3192; /* Dark Blue */
 }
 
-/* Custom styles for the footer */
-
-footer {
-    background-color: #343a40;
-    color: white;
+p {
+    font-size: 1.1rem;
 }
 
-footer a {
-    color: white;
+/* Form Styles */
+.form-control {
+    border-color: #2E3192; /* Dark Blue */
 }
 
-footer a:hover {
-    text-decoration: underline;
+.btn-primary {
+    background-color: #FF69B4; /* Pink */
+    border-color: #FF69B4; /* Pink */
 }
 
-.footer-links li {
-    margin-bottom: 10px;
+.btn-primary:hover {
+    background-color: #D4509B; /* Darker Pink on hover */
+    border-color: #D4509B; /* Darker Pink on hover */
 }
-
-.footer-links li a {
-    text-decoration: none;
-}
-
-
-
-/* Custom styles for the Parental Recommendations section */
-
-#parental-recommendations {
-    background-color: #f8f9fa;
-    padding: 50px 0;
-}
-
-#parental-recommendations h4 {
+#backToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
     font-size: 24px;
-    margin-bottom: 10px;
-}
-
-#parental-recommendations p {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-#parental-recommendations .btn {
-    margin-top: 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
 }

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,23 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Material Title 1</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{% static "main/style.css" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
-    <header class="bg-dark text-white text-center py-5">
+    
+    <script>
+        // JavaScript for fun header animation
+        document.addEventListener("DOMContentLoaded", function() {
+            animateHeader();
+        });
+
+        function animateHeader() {
+            const headerText = document.querySelector('header h1');
+            headerText.classList.add('animate__animated', 'animate__bounce');
+
+            // Remove the animation classes after the animation is complete
+            headerText.addEventListener('animationend', function() {
+                headerText.classList.remove('animate__animated', 'animate__bounce');
+            });
+        }
+    </script>
+
+    <header class="text-center py-5">
         <div class="container">
             <h1>Environmental Education for Children</h1>
             <nav class="mt-4">
-                <a class="mx-2 text-white" href="{% url 'main:index' %}">About Us</a>
-                <a class="mx-2 text-white" href="{% url 'educationalMaterials:index' %}">Educational Materials</a>
-                <a class="mx-2 text-white" href="#materials">Save the Planet</a>
-                <a class="mx-2 text-white" href="{% url 'creativeTask:index' %}">Creative Tasks</a>
-                <a class="mx-2 text-white" href="{% url 'quiz:index' %}">Quiz</a>
-                <a class="mx-2 text-white" href="{% url 'blog:index' %}">Blog</a>
+                <a class="mx-2" href="{% url 'main:index' %}">About Us</a>
+                <a class="mx-2" href="{% url 'educationalMaterials:index' %}">Educational Materials</a>
+                <a class="mx-2" href="#materials">Save the Planet</a>
+                <a class="mx-2" href="{% url 'creativeTask:index' %}">Creative Tasks</a>
+                <a class="mx-2" href="{% url 'quiz:index' %}">Quiz</a>
+                <a class="mx-2" href="{% url 'blog:index' %}">Blog</a>
                 {% if user.is_authenticated %}
-                <a class="mx-2 text-white" href="{% url 'log:logout_user' %}">Logout</a> 
+                <a class="mx-2" href="{% url 'log:logout_user' %}">Logout</a> 
                 {% else %}
-                <a class="mx-2 text-white" href="{% url 'log:logIn_user' %}">Login</a>
+                <a class="mx-2" href="{% url 'log:logIn_user' %}">Login</a>
                 {% endif %}
             </nav>
         </div>
@@ -41,7 +61,7 @@
 
 
 
-    <footer class="bg-dark text-white text-center py-3">
+    <footer class="text-white text-center py-3">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
@@ -70,7 +90,30 @@
         </div>
         <p>&copy; 2023 Environmental Education Project</p>
     </footer>
+    <button id="backToTopBtn" title="Go to top">↑</button>
 
+    <script>
+        // JavaScript for the "Back to Top" button
+        document.addEventListener("DOMContentLoaded", function() {
+            const backToTopBtn = document.getElementById('backToTopBtn');
+
+            // Show/hide the button based on scroll position
+            window.addEventListener('scroll', function() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    backToTopBtn.style.display = 'block';
+                } else {
+                    backToTopBtn.style.display = 'none';
+                }
+            });
+
+            // Scroll to the top when the button is clicked
+            backToTopBtn.addEventListener('click', function() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            });
+        });
+    </script>
+    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
