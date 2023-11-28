@@ -1,15 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Article
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 def index(request):
-    return render(request, "educationalMaterials/index.html")
+    articles = Article.objects.all()
+    return render(request, "educationalMaterials/index.html", {'articles': articles})
 
-def page1(request):
-    return render(request, "educationalMaterials/page1.html")
-
-def page2(request):
-    return render(request, "educationalMaterials/page2.html")
-
-def page3(request):
-    return render(request, "educationalMaterials/page3.html")
+def article_detail(request, article_id):
+    article = get_object_or_404(Article, pk=article_id)
+    return render(request, 'blog/article_detail.html', {'article': article})

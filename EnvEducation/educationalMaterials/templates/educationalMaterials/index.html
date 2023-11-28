@@ -3,43 +3,26 @@
 
 {% block body %}
 
-    <section id="materials" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-4">Educational Materials</h2>
-            <div class="row">
+<section id="blog" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Educational Materials</h2>
+        <div class="row">
+            {% for article in articles %}
                 <div class="col-md-4 mb-4">
                     <div class="card">
-                        <img src="material1.jpg" class="card-img-top" alt="Material 1">
+                        <img src="{{ article.image.url }}" class="card-img-top" alt="{{ article.title }}">
                         <div class="card-body">
-                            <h5 class="card-title">Material Title 1</h5>
-                            <p class="card-text">Description of material 1.</p>
-                            <a href="{% url "educationalMaterials:page1" %}" class="btn btn-primary">Follow</a>
+                            <h5 class="card-title">{{ article.title }}</h5>
+                            <p class="card-text">{{ article.label }}</p>
+                            <p class="card-text">{{ article.content|truncatechars:200 }}</p>
+                            <a href="{% url 'educationalMaterials:article_detail' article.id %}" class="btn btn-primary">Read More</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="material2.jpg" class="card-img-top" alt="Material 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Material Title 2</h5>
-                            <p class="card-text">Description of material 2.</p>
-                            <a href="{% url "educationalMaterials:page2" %}" class="btn btn-primary">Follow</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="material3.jpg" class="card-img-top" alt="Material 3">
-                        <div class="card-body">
-                            <h5 class="card-title">Material Title 3</h5>
-                            <p class="card-text">Description of material 3.</p>
-                            <a href="{% url "educationalMaterials:page3" %}" class="btn btn-primary">Follow</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
-    </section>
+    </div>
+</section>
 
     <section id="random-tip" class="py-5">
         <h2 class="text-center mb-4">Random Environmental Tip</h2>

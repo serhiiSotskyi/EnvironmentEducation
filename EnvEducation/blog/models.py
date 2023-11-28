@@ -8,7 +8,3 @@ class Article(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-
-        # Automatically create a URL for the article detail page
-        self.url = reverse('blog:article_detail', args=[str(self.id)])
-        super().save(*args, **kwargs)
