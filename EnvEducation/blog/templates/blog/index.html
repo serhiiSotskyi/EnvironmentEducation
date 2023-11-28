@@ -1,8 +1,7 @@
 {% extends "main/layout.html" %}
 
-{% block body %}
-<section id="blog" class="py-5">
-    <div class="container">
+{% block content %}
+{% comment %} <div class="container">
         <h2 class="text-center mb-4">Blog</h2>
         <div class="row">
             <div class="col-md-4 mb-4">
@@ -36,6 +35,20 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
+
+<section id="blog" class="py-5">
+    {% for article in articles %}
+        <div>
+            <h2>{{ article.title }}</h2>
+            <img src="{{ article.image.url }}" alt="{{ article.title }}">
+            <p>{{ article.label }}</p>
+            <p>{{ article.content|truncatechars:200 }}</p>
+            <a href="{% url 'article_detail' article.id %}">Read More</a>
+        </div>
+    {% endfor %}  
 </section>
 {% endblock %}
+
+
+

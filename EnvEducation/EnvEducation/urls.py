@@ -26,5 +26,9 @@ urlpatterns = [
     path("quiz/", include("quiz.urls")),
     path("legal/", include("legal.urls")),
     path("log/", include("log.urls")),
-    path("log/", include('django.contrib.auth.urls'))
+    path("log/", include('django.contrib.auth.urls')),
 ]
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
