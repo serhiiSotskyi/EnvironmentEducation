@@ -1,13 +1,15 @@
-# quiz_app/views.py
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from .models import *
 import random
-from django.core.serializers import serialize
 
 def quiz_list(request):
-    questions = Question.objects.all()
-    return render(request, 'quiz/index.html', {'questions': questions})
+    quizzes = Quiz.objects.all()
+    return render(request, 'quiz/index.html', {'quizzes' : quizzes})
+
+def quiz_detail(request, quiz_id):
+    quiz = get_object_or_404(Quiz, pk=quiz_id)
+    return render(request, "quiz/quiz_detail.html", {'quiz' : quiz})
 
 def get_quiz(request):
     try:
@@ -16,7 +18,7 @@ def get_quiz(request):
         random.shuffle(question_objs)
         for question_obj in question_objs:
             data.append({
-                'category' : question_obj.category.category_name,
+                'quiz' : question_obj.quiz.quiz_name,
                 'question' : question_obj.question,
                 'marks' : question_obj.marks,
                 'answers' : question_obj.get_answers()
@@ -28,4 +30,3 @@ def get_quiz(request):
     except Exception as e:
         print(e)
     return HttpResponse("Something went wrong")
-    

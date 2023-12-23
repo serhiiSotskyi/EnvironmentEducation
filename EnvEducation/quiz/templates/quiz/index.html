@@ -5,115 +5,53 @@
     {% endblock %}
 
     {% block body %}
-    <div class="container mt-5">
+
+    <section id="blog" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Quizzes</h2>
+            <div class="row">
+                {% for quiz in quizzes %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ quiz.quiz_name }}</h5>
+                                <a href="{% url 'quiz:quiz_detail' quiz.uuid %}" class="btn btn-primary">Go for quiz</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    {% comment %} <div class="container mt-5">
         <div class="card" style="max-width: 500px; margin: auto;">
             <div class="card-body">
                 <h1 class="text-center">Simple Quiz</h1>
                 <div class="quiz text-center">
-                    <h2 id="question" class="mt-4"></h2>
-                    <div id="answer-buttons" class="mt-4"></div>
+                    <h2 id="question" class="mt-4">Question goes here</h2>
+                    <div id="answer-buttons" class="mt-4">
+                        <button class="btn btn-primary d-block mb-2 mx-auto">Answer 1</button>
+                        <button class="btn btn-primary d-block mb-2 mx-auto">Answer 2</button>
+                        <button class="btn btn-primary d-block mb-2 mx-auto">Answer 3</button>
+                        <button class="btn btn-primary d-block mb-2 mx-auto">Answer 4</button>
+                    </div>
                     <button id="next-btn" class="btn btn-success mt-4">Next</button>
                 </div>
             </div>
         </div>
-    </div>
+    </div>   {% endcomment %}
     
-    <script>
-        const questions = {{ questions|safe }};
-        const questionElement = document.getElementById("question");
-        const answerButton = document.getElementById("answer-buttons");
-        const nextButton = document.getElementById("next-btn");
-    
-        let currentQuestionIndex = 0;
-        let score = 0;
-    
-        function startQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            nextButton.innerHTML = "Next";
-            showQuestion();
-        }
-    
-        function showQuestion() {
-            resetState();
-            let currentQuestion = questions[currentQuestionIndex];
-            questionElement.innerHTML = currentQuestion.question;
-    
-            currentQuestion.answers.forEach(answer => {
-                const button = document.createElement("button");
-                button.innerHTML = answer.answer;
-                button.classList.add("btn");
-                answerButton.appendChild(button);
-    
-                if (answer.is_correct) {
-                    button.dataset.correct = "true";
-                }
-    
-                button.addEventListener("click", selectAnswer);
-            });
-        }
-    
-        function resetState() {
-            nextButton.style.display = "none";
-            while (answerButton.firstChild) {
-                answerButton.removeChild(answerButton.firstChild);
-            }
-        }
-    
-        function selectAnswer(e) {
-            const selectBtn = e.target;
-            const isCorrect = selectBtn.dataset.correct === "true";
-    
-            if (isCorrect) {
-                selectBtn.classList.add("correct");
-                score++;
-            } else {
-                selectBtn.classList.add("incorrect");
-            }
-    
-            Array.from(answerButton.children).forEach(button => {
-                if (button.dataset.correct === "true") {
-                    button.classList.add("correct");
-                }
-                button.disabled = true;
-            });
-    
-            nextButton.style.display = "block";
-        }
-    
-        function showScore() {
-            resetState();
-            questionElement.innerHTML = `You scored ${score} out of ${questions.length}`;
-            nextButton.innerHTML = "Play Again";
-            nextButton.style.display = "block";
-        }
-    
-        function handleNextButton() {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                showQuestion();
-            } else {
-                showScore();
-            }
-        }
-    
-        nextButton.addEventListener("click", () => {
-            if (currentQuestionIndex < questions.length) {
-                handleNextButton();
-            } else {
-                startQuiz();
-            }
-        });
-    
-        startQuiz();
-    </script>
-    
-    
+    <br>
     {% endblock %}
 
     {% block extraScript %}
     {% load static %}
-    {% comment %} <script src="{% static "quiz/script.js" %}"></script> {% endcomment %}
+    <script src="{% static "quiz/script.js" %}"></script>
     {% endblock %}
 
 
