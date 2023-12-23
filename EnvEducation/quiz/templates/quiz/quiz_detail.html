@@ -1,0 +1,34 @@
+{% extends "main/layout.html" %}
+    {% block extraCSS %}
+        {% load static %}
+        <link rel="stylesheet" href="{% static "quiz/style.css" %}">
+    {% endblock %}
+
+    {% block body %}
+    <div class="container mt-5">
+        <div class="card" style="max-width: 500px; margin: auto;">
+            <div class="card-body">
+                <h1 class="text-center">Simple Quiz</h1>
+                <div class="quiz text-center">
+                    <h2 id="question" class="mt-4">Question goes here</h2>
+                    <div id="answer-buttons" class="mt-4">
+                        <button class="btn btn-primary d-block mb-2 mx-auto">Answer 1</button>
+                        <button class="btn btn-primary d-block mb-2 mx-auto">Answer 2</button>
+                        <button class="btn btn-primary d-block mb-2 mx-auto">Answer 3</button>
+                        <button class="btn btn-primary d-block mb-2 mx-auto">Answer 4</button>
+                    </div>
+                    <button id="next-btn" class="btn btn-success mt-4">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>  
+
+    
+    <br>
+
+    {% endblock %}
+
+    {% block extraScript %}
+    {% load static %}
+    <script src="{% static "quiz/script.js" %}"></script>
+    {% endblock %}

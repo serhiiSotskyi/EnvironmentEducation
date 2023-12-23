@@ -1,5 +1,3 @@
-
-
 // Array of questions, each containing a question text and an array of answers with correctness flags.
 const questions = [
     {
@@ -44,6 +42,7 @@ const questions = [
 const questionElement = document.getElementById("question");  // The element that displays the question
 const answerButton = document.getElementById("answer-buttons");  // The container for answer buttons
 const nextButton = document.getElementById("next-btn");  // The button to move to the next question
+
 
 let currentQuestionIndex = 0;  // Index to keep track of the current question
 let score = 0;  // Variable to keep track of the user's score
@@ -136,7 +135,7 @@ function handleNextButton(){
         showScore();
     }
 }
-console.log(nextButton);
+
 // Attach event listener to the 'Next' button
 nextButton.addEventListener("click", ()=>{
     if(currentQuestionIndex < questions.length){
@@ -145,6 +144,5 @@ nextButton.addEventListener("click", ()=>{
         startQuiz();
     }
 });
-console.log(nextButton);
 
 startQuiz();
