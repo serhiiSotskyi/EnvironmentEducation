@@ -3,13 +3,12 @@ import uuid
 import random
 
 class BaseModel(models.Model):
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
 
     class Meta:
         abstract = True
-
 
 class Quiz(BaseModel):
     quiz_name = models.CharField(max_length=100)
@@ -19,8 +18,8 @@ class Quiz(BaseModel):
     
 
 class Question(BaseModel):
-    quiz = models.ForeignKey(Quiz,related_name='questins', on_delete=models.CASCADE)
-    question = models.CharField(max_length=100)
+    quiz = models.ForeignKey(Quiz, related_name='question', on_delete=models.CASCADE)
+    question = models.CharField(max_length=300)
     marks = models.IntegerField(default=1)
 
     def __str__(self) -> str:
@@ -32,13 +31,13 @@ class Question(BaseModel):
         data = []
         for answer_obj in answer_objs:
             data.append({
-                'answer' : answer_obj.answer,
-                'is_correct' : answer_obj.is_correct
+                "answer" : answer_obj.answer,
+                "is_correct" : answer_obj.is_correct
             })
         return data
 
 class Answer(BaseModel):
-    question = models.ForeignKey(Question, related_name='question_answer', on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, related_name='answer', on_delete=models.CASCADE)
     answer = models.CharField(max_length=100)
     is_correct = models.BooleanField(default=False)
 

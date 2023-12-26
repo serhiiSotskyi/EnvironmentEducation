@@ -1,32 +1,41 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import *
 import random
+from django.views.decorators.http import require_POST
+import json
+
 
 def quiz_list(request):
-    quizzes = Quiz.objects.all()
-    return render(request, 'quiz/index.html', {'quizzes' : quizzes})
+    context = {"quizzes" : Quiz.objects.all()}
+    if request.GET.get('quiz'):
+        return redirect(f"quiz_detail/?quiz={request.GET.get('quiz')}")
+    return render(request, 'quiz/index.html', context)
 
-def quiz_detail(request, quiz_id):
-    quiz = get_object_or_404(Quiz, pk=quiz_id)
-    return render(request, "quiz/quiz_detail.html", {'quiz' : quiz})
+def quiz_detail(request):
+    context = {'quiz' : request.GET.get('quiz')}
+    return render(request, 'quiz/quiz_detail.html', context)
 
 def get_quiz(request):
     try:
-        question_objs = list(Question.objects.all())
+        question_objs = Question.objects.all()
+        if request.GET.get('quiz'):
+            question_objs = question_objs.filter(quiz__quiz_name__icontains=request.GET.get('quiz'))
+        question_objs = list(question_objs)
         data = []
         random.shuffle(question_objs)
         for question_obj in question_objs:
             data.append({
-                'quiz' : question_obj.quiz.quiz_name,
-                'question' : question_obj.question,
-                'marks' : question_obj.marks,
-                'answers' : question_obj.get_answers()
+                "uid" : question_obj.uid,
+                "quiz" : question_obj.quiz.quiz_name,
+                "question" : question_obj.question,
+                "marks" : question_obj.marks,
+                "answers" : question_obj.get_answers()
             })
-
-        payload = {'status' : True, 'data' : data}
+        payload = {"status" : True, "data" : data}
         return JsonResponse(payload)
-
     except Exception as e:
         print(e)
     return HttpResponse("Something went wrong")
+
+

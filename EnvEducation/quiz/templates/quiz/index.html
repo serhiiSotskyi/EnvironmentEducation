@@ -5,8 +5,28 @@
     {% endblock %}
 
     {% block body %}
+    <div class="container mt-5 pt-5">
+        <div class="col-md-6 mx-auto">
+            <form action="">
+                <div class="form-group">
+                    <label for="">Select Quiz</label>
+                    <select name="quiz" id="" class="form-control">
+                        <option value="Choose">Choose</option>
+                        {% for quiz in quizzes %}
+                        <option value="{{ quiz.quiz_name }}">{{ quiz.quiz_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button class="btn btn-danger">Submit</button>
+            </form>
+        </div>
+    </div>
 
-    <section id="blog" class="py-5">
+
+
+
+
+    {% comment %} <section id="blog" class="py-5">
         <div class="container">
             <h2 class="text-center mb-4">Quizzes</h2>
             <div class="row">
@@ -15,14 +35,14 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">{{ quiz.quiz_name }}</h5>
-                                <a href="{% url 'quiz:quiz_detail' quiz.uuid %}" class="btn btn-primary">Go for quiz</a>
+                                <a href="{% url 'quiz:quiz_detail' quiz.uuid %}" class="btn btn-primary">Start Quiz</a>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
             </div>
         </div>
-    </section>
+    </section> {% endcomment %}
 
 
 
@@ -44,7 +64,7 @@
                 </div>
             </div>
         </div>
-    </div>   {% endcomment %}
+    </div>    {% endcomment %}
     
     <br>
     {% endblock %}
