@@ -5,84 +5,37 @@
     {% endblock %}
 
     {% block body %}
-    <p>Debug: {{ quiz }}</p>
-
+    <br>
     <div id="app">
-        {% comment %} <div v-for="task in tasks"> {% endcomment %}
-            <div class="col-md-6 mx-auto">
-                <h3>{{ quiz }}</h3>
-                <hr>
-                <div v-for="question in questions">
-                    <p>[[question.question]]</p>
-                <div class="form-check" v-for="answer in question.answers">
-                    <input @change="checkAnswer($event, question.uid)" :value="answer.answer" class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                    <label class="form-check-label" for="exampleRadios1">
-                      [[answer.answer]]
+        <div class="col-md-6 mx-auto">
+            <h3>{{ quiz }}</h3>
+            <hr>
+            <div v-for="question in questions" :key="question.uid">
+                <p>[[question.question]]</p>
+                <div class="form-check" v-for="(answer, index) in question.answers" :key="index">
+                    <input
+                        @change="checkAnswer($event, question.uid)"
+                        :value="answer.answer"
+                        class="form-check-input"
+                        type="radio"
+                        :name="'exampleRadios' + question.uid"
+                        :id="'exampleRadios' + question.uid + '_' + index"
+                        :disabled="quizFinished"
+                    >
+                    <label :for="'exampleRadios' + question.uid + '_' + index" class="form-check-label">
+                        [[answer.answer]]
                     </label>
                 </div>
-                
-                  <hr>
-                </div>
+                <hr>
             </div>
-        {% comment %} </div> {% endcomment %}
-    </div>
-
-
-
-
-
-
-
-
-{% comment %} <div class="container mt-5">
-    <div class="card" style="max-width: 500px; margin: auto;">
-        <div class="card-body">
-            <h1 class="text-center">{{ quiz.quiz_name }}</h1>
-            <div class="quiz text-center">
-                {% for question in questions %}
-                    <h2 id="question-{{ question.uuid }}" class="mt-4">{{ question.question_text }}</h2>
-                    <div id="answer-buttons-{{ question.uuid }}" class="mt-4">
-                        {% for answer in question.answers.all %}
-                            <button class="btn btn-primary d-block mb-2 mx-auto {% if answer.is_correct %}correct{% else %}incorrect{% endif %}">
-                                {{ answer.answer }}
-                            </button>
-                        {% endfor %}
-                    </div>
-                {% endfor %}
+            <button class="btn" @click="finishQuiz" :disabled="quizFinished">Finish</button>
+            <div v-if="quizFinished">
+                <h4>Your Score: [[score]] out of [[maxScore]]</h4>
             </div>
-            <button id="finish-btn" class="btn btn-success mt-4" onclick="finishQuiz()">Finish Quiz</button>
         </div>
     </div>
-</div> {% endcomment %}
-
-{% comment %} <div class="container mt-5">
-    <div class="card" style="max-width: 500px; margin: auto;">
-        <div class="card-body">
-            <h1 class="text-center">{{ quiz.quiz_name }}</h1>
-            <div class="quiz text-center">
-                {% for question in questions %}
-                    <h2 id="question-{{ question.uuid }}" class="mt-4">{{ question.question_text }}</h2>
-                    <div id="answer-buttons-{{ question.uuid }}" class="mt-4">
-                        {% for answer in question.answers.all %}
-                            <button class="btn btn-primary d-block mb-2 mx-auto" onclick="selectAnswer('{{ question.uuid }}', '{{ answer.uuid }}')">
-                                {{ answer.answer }}
-                            </button>
-                        {% endfor %}
-                    </div>
-                    <div id="correct-answer-{{ question.uuid }}" class="mt-2" style="display:none;">
-                        Correct Answer: {{ question.correct_answer }}
-                    </div>
-                {% endfor %}
-            </div>
-            <button id="finish-btn" class="btn btn-success mt-4" onclick="finishQuiz()">Finish Quiz</button>
-        </div>
-    </div>
-</div> {% endcomment %}
-
-
     
     <br>
-
     {% endblock %}
 
     {% block extraScript %}
@@ -94,7 +47,10 @@
             data() {
                 return {
                     quiz : '{{ quiz }}',
-                    questions : []
+                    questions : [],
+                    score: 0,
+                    quizFinished: false,
+                    maxScore: 0
                 }
             },
             methods : {
@@ -108,19 +64,28 @@
                     });
                 },
                 checkAnswer(event, uid){
-                    this.questions.map(question =>{
-                        answers = question.answers
-                        for(var i=0; i < answers.length; i++){
-                            if(answers[i].answer == event.target.value){
-                                if(answers[i].is_correct){
-                                    console.log("Your answer is correct")
-                                }else{
-                                    console.log("Your answer is incorrect")
+                    if (!this.quizFinished) {
+                        this.questions.map(question =>{
+                            answers = question.answers
+                            for(var i=0; i < answers.length; i++){
+                                if(answers[i].answer == event.target.value){
+                                    if(answers[i].is_correct){
+                                        console.log("Your answer is correct")
+                                        this.score++;
+                                    } else {
+                                        console.log("Your answer is incorrect")
+                                    }
                                 }
                             }
-                        }
-                    })
+                        })
+                    }
                     console.log(event.target.value, uid)
+                },
+                finishQuiz(){
+                    this.maxScore = this.questions.length;
+                    this.quizFinished = true;
+                    console.log("Quiz finished. Your score: " + this.score);
+                    // You can perform additional actions here based on the quiz completion.
                 }
             },
             created() {
@@ -128,7 +93,21 @@
             },
         });
     </script>
-    {% comment %} <script src="{% static "quiz/script.js" %}"></script> {% endcomment %}
-    
-    
     {% endblock %}
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+   

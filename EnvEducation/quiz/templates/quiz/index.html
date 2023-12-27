@@ -5,66 +5,27 @@
     {% endblock %}
 
     {% block body %}
-    <div class="container mt-5 pt-5">
-        <div class="col-md-6 mx-auto">
-            <form action="">
-                <div class="form-group">
-                    <label for="">Select Quiz</label>
-                    <select name="quiz" id="" class="form-control">
-                        <option value="Choose">Choose</option>
-                        {% for quiz in quizzes %}
-                        <option value="{{ quiz.quiz_name }}">{{ quiz.quiz_name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button class="btn btn-danger">Submit</button>
-            </form>
-        </div>
-    </div>
-
-
-
-
-
-    {% comment %} <section id="blog" class="py-5">
+    
+    <section id="blog" class="py-5">
         <div class="container">
             <h2 class="text-center mb-4">Quizzes</h2>
             <div class="row">
                 {% for quiz in quizzes %}
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ quiz.quiz_name }}</h5>
-                                <a href="{% url 'quiz:quiz_detail' quiz.uuid %}" class="btn btn-primary">Start Quiz</a>
-                            </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ quiz.quiz_name }}</h5>
+                            <p class="card-text">Questions: {{ quiz.question.count }}</p>
+                            <a href="{% url 'quiz:quiz_detail' %}?quiz={{ quiz.quiz_name }}" class="btn btn-danger">Start Quiz</a>
                         </div>
                     </div>
+                </div>
                 {% endfor %}
             </div>
         </div>
-    </section> {% endcomment %}
+    </section>
 
-
-
-
-
-    {% comment %} <div class="container mt-5">
-        <div class="card" style="max-width: 500px; margin: auto;">
-            <div class="card-body">
-                <h1 class="text-center">Simple Quiz</h1>
-                <div class="quiz text-center">
-                    <h2 id="question" class="mt-4">Question goes here</h2>
-                    <div id="answer-buttons" class="mt-4">
-                        <button class="btn btn-primary d-block mb-2 mx-auto">Answer 1</button>
-                        <button class="btn btn-primary d-block mb-2 mx-auto">Answer 2</button>
-                        <button class="btn btn-primary d-block mb-2 mx-auto">Answer 3</button>
-                        <button class="btn btn-primary d-block mb-2 mx-auto">Answer 4</button>
-                    </div>
-                    <button id="next-btn" class="btn btn-success mt-4">Next</button>
-                </div>
-            </div>
-        </div>
-    </div>    {% endcomment %}
+    
     
     <br>
     {% endblock %}

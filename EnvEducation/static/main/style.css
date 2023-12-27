@@ -1,0 +1,80 @@
+/* styles.css */
+
+/* Header Styles */
+header {
+    background-color: #FFD700; /* Gold */
+}
+
+header h1 {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 2.5rem;
+    color: #2E3192; /* Dark Blue */
+}
+
+nav a {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 1.2rem;
+    color: #2E3192; /* Dark Blue */
+}
+
+/* Alert Styles */
+.alert-environmental {
+    background-color: #FFB6C1; /* Light Pink */
+    color: #8B0000; /* Dark Red */
+    border-color: #FF69B4; /* Pink Border */
+}
+
+/* Footer Styles */
+footer {
+    background-color: #87CEEB; /* Sky Blue */
+}
+
+footer h5,
+footer p,
+footer ul li a {
+    font-family: 'Comic Sans MS', cursive;
+    color: #2E3192; /* Dark Blue */
+}
+
+/* General Styles */
+body {
+    font-family: 'Comic Sans MS', cursive;
+    background-color: #E6E6FA; /* Lavender */
+    color: #2E3192; /* Dark Blue */
+}
+
+h2 {
+    color: #2E3192; /* Dark Blue */
+}
+
+p {
+    font-size: 1.1rem;
+}
+
+/* Form Styles */
+.form-control {
+    border-color: #2E3192; /* Dark Blue */
+}
+
+.btn-primary {
+    background-color: #FF69B4; /* Pink */
+    border-color: #FF69B4; /* Pink */
+}
+
+.btn-primary:hover {
+    background-color: #D4509B; /* Darker Pink on hover */
+    border-color: #D4509B; /* Darker Pink on hover */
+}
+#backToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+}

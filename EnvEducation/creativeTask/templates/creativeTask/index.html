@@ -1,8 +1,48 @@
 {% extends "main/layout.html" %}
 
 {% block body %}
+<section id="submit-ideas" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Submit Your Ideas</h2>
+        {% if submitted %}
+            <p>Your form was submitted successfully!</p>
+        {% endif %}
+        <form enctype="multipart/form-data" method="post" action="{% url 'creativeTask:index' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</section>
 
-<section id="creative-tasks" class="py-5">
+<section id="submitted-data" class="py-5 submitted-data">
+    <div class="container">
+        <h2 class="text-center mb-4">Posts</h2>
+        <div class="row">
+            {% for post in submitted_data %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.name }}</h5>
+                        <p class="card-text">Category: {{ post.category }}</p>
+                        {% if post.text %}
+                            <p>Text: {{ post.text }}</p>
+                        {% endif %}
+                        {% if post.drawing_file %}
+                        <p>Drawing File: <a href="{{ post.drawing_file.url }}" target="_blank">View File</a></p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+
+
+{% comment %} <section id="creative-tasks" class="py-5">
     <div class="container">
         <h2 class="text-center mb-4">Creative Tasks</h2>
         <div class="row">
@@ -14,14 +54,18 @@
 <section id="submit-ideas" class="py-5 bg-light">
     <div class="container">
         <h2 class="text-center mb-4">Submit Your Ideas</h2>
-        <form enctype="multipart/form-data">
+        {% if submitted %}
+                <p>Your form was submitted successfully!</p>
+            {% endif %}
+        <form enctype="multipart/form-data" method="post" action="{% url 'creativeTask:index' %}">
+            {% csrf_token %}
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" required>
+                <input type="text" class="form-control" id="name" name="name" required>
             </div>
             <div class="form-group">
                 <label for="category">Category</label>
-                <select class="form-control" id="category" required>
+                <select class="form-control" id="category" name="category" required>
                     <option value="" disabled selected>Select Category</option>
                     <option value="Drawing">Drawing</option>
                     <option value="Story">Story</option>
@@ -33,13 +77,28 @@
                 <input type="file" class="form-control-file" id="drawingFile" name="drawingFile">
             </div>
             <div class="form-group" id="textField" style="display:none;">
-                <label for="text">Your {Category}</label>
+                <label for="text">Your {category}</label>
                 <textarea class="form-control" id="text" rows="4" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </section>
+
+{% if submitted_data.name is not None %}
+                <div class="submitted-data">
+                    <h3>Submitted Data:</h3>
+                    <p>Name: {{ submitted_data.name }}</p>
+                    <p>Category: {{ submitted_data.category }}</p>
+                    {% if submitted_data.text is not None %}
+                    <p>Text: {{ submitted_data.text }}</p>
+                    {% endif %}
+                    {% if submitted_data.drawing_file is not None %}
+                    <p>Text: {{ submitted_data.drawing_file }}</p>
+                    {% endif %}
+                    <!-- Add other form fields as needed -->
+                </div>
+{% endif %} {% endcomment %}
 
 <script>
     document.getElementById('category').addEventListener('change', function() {
@@ -56,7 +115,7 @@
             document.getElementById('text').setAttribute('placeholder', 'Your ' + category);
         }
     });
-</script>
+</script> 
 
 
     

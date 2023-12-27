@@ -1,7 +1,8 @@
+# creativeTask/urls.py
 from django.urls import path
 from . import views
 
-app_name = "creativeTask"
+app_name = 'creativeTask'
 urlpatterns = [
-    path("", views.index, name="index")
+    path('', views.index, name='index'),
 ]
