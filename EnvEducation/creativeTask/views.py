@@ -2,6 +2,7 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse
 from .models import IdeaSubmission
 from .forms import IdeaSubmissionForm
+from django.contrib import messages
 
 def index(request):
     submitted_data = None
@@ -13,6 +14,8 @@ def index(request):
             form.save()
             submitted_data = form.cleaned_data
             submitted = True
+            form = IdeaSubmissionForm()
+            messages.success(request, ("Your post was submitted successfully!"))
     else:
         form = IdeaSubmissionForm()
     submitted_data = IdeaSubmission.objects.all()

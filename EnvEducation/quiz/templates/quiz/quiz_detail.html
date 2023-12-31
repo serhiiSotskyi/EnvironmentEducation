@@ -9,6 +9,9 @@
     <div id="app">
         <div class="col-md-6 mx-auto">
             <h3>{{ quiz }}</h3>
+            {% if user.is_authenticated and quiz in user.passed_quizzes.all %}
+        <p>Congratulations! You have passed this quiz.</p>
+    {% endif %}
             <hr>
             <div v-for="question in questions" :key="question.uid">
                 <p>[[question.question]]</p>
@@ -94,20 +97,3 @@
         });
     </script>
     {% endblock %}
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-   

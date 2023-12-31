@@ -7,13 +7,22 @@ import json
 
 
 def quiz_list(request):
-    context = {"quizzes" : Quiz.objects.all()}
+    context = {"quizzes" : Quiz.objects.all(),}
     if request.GET.get('quiz'):
         return redirect(f"quiz_detail/?quiz={request.GET.get('quiz')}")
     return render(request, 'quiz/index.html', context)
 
 def quiz_detail(request):
-    context = {'quiz' : request.GET.get('quiz')}
+    quiz_name = request.GET.get('quiz')
+    quiz = get_object_or_404(Quiz, quiz_name=quiz_name)
+    user = request.user
+
+    # Mark the quiz as passed for the current user
+    if user.is_authenticated and quiz not in user.passed_quizzes.all():
+        user.passed_quizzes.add(quiz)
+
+    context = {'quiz': quiz_name,
+               'user': user}
     return render(request, 'quiz/quiz_detail.html', context)
 
 def get_quiz(request):
@@ -37,5 +46,3 @@ def get_quiz(request):
     except Exception as e:
         print(e)
     return HttpResponse("Something went wrong")
-
-

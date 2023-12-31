@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserForm
+from django.shortcuts import get_object_or_404
+from blog.models import Article
+from quiz.models import *
 
 # Create your views here.
 def logIn_user(request):

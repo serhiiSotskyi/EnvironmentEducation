@@ -33,10 +33,59 @@
     <header class="text-center py-5">
         <div class="container">
             <h1>Environmental Education for Children</h1>
+    
+            <!-- Responsive Navigation -->
+            <nav class="mt-4">
+                <div class="navbar navbar-expand-lg navbar-light">
+    
+                    <!-- Toggle button for small devices -->
+                    <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+    
+                    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+    
+                        <!-- Navigation links -->
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'main:index' %}">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'educationalMaterials:index' %}">Educational Materials</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'creativeTask:index' %}">Creative Tasks</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'quiz:quiz_list' %}">Quiz</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'blog:article_list' %}">Blog</a>
+                            </li>
+                            {% if user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'log:logout_user' %}">Logout</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'log:logIn_user' %}">Login</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    
+
+    {% comment %} <header class="text-center py-5">
+        <div class="container">
+            <h1>Environmental Education for Children</h1>
             <nav class="mt-4">
                 <a class="mx-2" href="{% url 'main:index' %}">About Us</a>
                 <a class="mx-2" href="{% url 'educationalMaterials:index' %}">Educational Materials</a>
-                <a class="mx-2" href="#materials">Save the Planet</a>
                 <a class="mx-2" href="{% url 'creativeTask:index' %}">Creative Tasks</a>
                 <a class="mx-2" href="{% url 'quiz:quiz_list' %}">Quiz</a>
                 <a class="mx-2" href="{% url 'blog:article_list' %}">Blog</a>
@@ -47,7 +96,7 @@
                 {% endif %}
             </nav>
         </div>
-    </header>
+    </header> {% endcomment %}
     {% if messages %}
         {% for message in messages %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -69,9 +118,9 @@
                 <div class="col-md-4">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#materials">Educational Materials</a></li>
-                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="{% url 'main:index' %}">About Us</a></li>
+                        <li><a href="{% url 'educationalMaterials:index' %}">Educational Materials</a></li>
+                        <li><a href="{% url 'main:index' %}#contact">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">

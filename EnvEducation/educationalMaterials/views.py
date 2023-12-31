@@ -10,4 +10,6 @@ def index(request):
 
 def article_detail(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
-    return render(request, 'blog/article_detail.html', {'article': article})
+    # Mark the article as read for the current user
+    article.readers.add(request.user)
+    return render(request, 'educationalMaterials/article_detail.html', {'article': article})

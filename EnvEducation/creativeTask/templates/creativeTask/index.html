@@ -4,27 +4,46 @@
 <section id="submit-ideas" class="py-5 bg-light">
     <div class="container">
         <h2 class="text-center mb-4">Submit Your Ideas</h2>
-        {% if submitted %}
-            <p>Your form was submitted successfully!</p>
-        {% endif %}
         <form enctype="multipart/form-data" method="post" action="{% url 'creativeTask:index' %}">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Submit</button>
+            
+            <div class="form-group">
+                <label for="id_name">Name:</label>
+                {{ form.name }}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_name_of_the_idea">Idea Name:</label>
+                {{ form.name_of_the_idea }}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_text">Text:</label>
+                {{ form.text }}
+            </div>
+            
+            <div class="form-group">
+                <label for="id_drawing_file">Drawing File:</label>
+                {{ form.drawing_file }}
+            </div>
+
+            <button type="submit" id="submit-btn" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </section>
+
+
 
 <section id="submitted-data" class="py-5 submitted-data">
     <div class="container">
         <h2 class="text-center mb-4">Posts</h2>
         <div class="row">
             {% for post in submitted_data %}
-            <div class="col-md-4 mb-4">
+            <div class="col-md-12 mb-12">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">{{ post.name }}</h5>
-                        <p class="card-text">Category: {{ post.category }}</p>
+                        <p class="card-text">Idea: {{ post.name_of_the_idea }}</p>
                         {% if post.text %}
                             <p>Text: {{ post.text }}</p>
                         {% endif %}
@@ -37,7 +56,71 @@
             {% endfor %}
         </div>
     </div>
-</section>
+</section> 
+
+<!-- Place this script at the end of the <body> section or use DOMContentLoaded -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var submitBtn = document.getElementById('submit-btn');
+    
+            if (submitBtn) {
+                submitBtn.addEventListener('click', function (event) {
+                    var nameField = document.getElementById('{{ form.name.id_for_label }}');
+                    var ideaNameField = document.getElementById('{{ form.name_of_the_idea.id_for_label }}');
+                    var textField = document.getElementById('{{ form.text.id_for_label }}');
+                    var drawingField = document.getElementById('{{ form.drawing_file.id_for_label }}');
+    
+                    var name = nameField.value.trim();
+                    var ideaName = ideaNameField.value.trim();
+                    var text = textField.value.trim();
+                    var drawingFile = drawingField.value.trim();
+    
+                    if (!name || !ideaName || (!text && !drawingFile)) {
+                        alert('Please fill in all fields before submitting.');
+                        event.preventDefault();  // Prevent form submission if fields are not filled
+                    }
+                });
+            }
+        });
+    </script>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -100,7 +183,7 @@
                 </div>
 {% endif %} {% endcomment %}
 
-<script>
+{% comment %} <script>
     document.getElementById('category').addEventListener('change', function() {
         var category = this.value;
         var drawingField = document.getElementById('drawingField');
@@ -115,7 +198,7 @@
             document.getElementById('text').setAttribute('placeholder', 'Your ' + category);
         }
     });
-</script> 
+</script>  {% endcomment %}
 
 
     

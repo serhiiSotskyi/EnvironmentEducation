@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import * 
 
-admin.site.register(Quiz)
+
 
 class AnswerAdmin(admin.StackedInline):
     model = Answer
@@ -9,6 +9,7 @@ class AnswerAdmin(admin.StackedInline):
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [AnswerAdmin]
 
+admin.site.register(Quiz)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Answer)
 

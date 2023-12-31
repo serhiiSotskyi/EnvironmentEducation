@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 import random
+from django.contrib.auth.models import User
 
 class BaseModel(models.Model):
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -12,6 +13,7 @@ class BaseModel(models.Model):
 
 class Quiz(BaseModel):
     quiz_name = models.CharField(max_length=100)
+    passed_by_users = models.ManyToManyField(User, blank=True, related_name='passed_quizzes')
 
     def __str__(self) -> str:
         return self.quiz_name
@@ -43,3 +45,11 @@ class Answer(BaseModel):
 
     def __str__(self) -> str:
         return self.answer
+    
+class UserQuizScore(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    score = models.IntegerField(default=0)
+
+    def __str__(self) -> str:
+        return f"{self.user.username} - {self.quiz.quiz_name} - Score: {self.score}"

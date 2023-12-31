@@ -49,18 +49,19 @@
             <div class="row">
                 <div class="col-md-6">
                     <h2 class="mb-4">Contact Us</h2>
-                    <form>
+                    <form id="contactForm" mathod="POST">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label for="name">Your Name</label>
-                            <input type="text" class="form-control" id="name" required>
+                            <input type="text" class="form-control" id="name" name="name" required>
                         </div>
                         <div class="form-group">
                             <label for="email">Your Email</label>
-                            <input type="email" class="form-control" id="email" required>
+                            <input type="email" class="form-control" id="email" name="email" required>
                         </div>
                         <div class="form-group">
                             <label for="message">Message</label>
-                            <textarea class="form-control" id="message" rows="5" required></textarea>
+                            <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Send Message</button>
                     </form>
@@ -75,6 +76,43 @@
             </div>
         </div>
     </section>
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#submitForm').click(function () {
+                // Get form data
+                var formData = {
+                    'name': $('#name').val(),
+                    'email': $('#email').val(),
+                    'message': $('#message').val(),
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+                };
+                var csrftoken = getCookie('csrftoken');
+                // Send AJAX request
+                $.ajax({
+                    type: 'POST',
+                    url: '/submit_form/',  // Update with your actual URL
+                    data: formData,
+                    dataType: 'json',
+                    encode: true,
+                    headers: {
+                        'X-CSRFToken': csrftoken
+                    }
+                })
+                
+                .done(function (data) {
+                    console.log(data);
+                    // Handle success, e.g., show a success message to the user
+                })
+                .fail(function (data) {
+                    console.error(data);
+                    // Handle failure, e.g., show an error message to the user
+                });
+            });
+        });
+    </script>
 
     <script>
         // List of environmental facts
