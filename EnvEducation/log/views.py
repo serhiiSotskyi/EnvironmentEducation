@@ -1,15 +1,11 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserForm
-from django.shortcuts import get_object_or_404
-from blog.models import Article
 from quiz.models import *
 
-# Create your views here.
 def logIn_user(request):
+    # Handle user login
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
@@ -18,19 +14,21 @@ def logIn_user(request):
             login(request, user)
             messages.success(request, ("You were logged in"))
             return redirect('main:index')
-            
         else:
             messages.success(request, ("There was an Error Logging In, Try again..."))
-            return redirect('log:logIn_user')      
+            return redirect('log:logIn_user')
     else:
+        # Render login form
         return render(request, "authenticate/logIn.html", {})
 
 def logout_user(request):
+    # Handle user logout
     logout(request)
     messages.success(request, ("You were logged out"))
     return redirect('main:index')
 
 def signUp_user(request):
+    # Handle user signup
     if request.method == "POST":
         form = RegisterUserForm(request.POST)
         if form.is_valid():
@@ -43,6 +41,6 @@ def signUp_user(request):
             return redirect('main:index')
     else:
         form = RegisterUserForm()
-    return render(request, "authenticate/signUp.html", {
-        "form":form,
-    })
+    
+    # Render signup form
+    return render(request, "authenticate/signUp.html", {"form": form})

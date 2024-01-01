@@ -1,99 +1,117 @@
 {% extends "main/layout.html" %}
-    {% block extraCSS %}
-        {% load static %}
-        <link rel="stylesheet" href="{% static "quiz/style.css" %}">
-    {% endblock %}
 
-    {% block body %}
-    <br>
-    <div id="app">
-        <div class="col-md-6 mx-auto">
-            <h3>{{ quiz }}</h3>
-            {% if user.is_authenticated and quiz in user.passed_quizzes.all %}
-        <p>Congratulations! You have passed this quiz.</p>
-    {% endif %}
+{% block extraCSS %}
+    {% load static %}
+    <!-- Link to the custom CSS file for the quiz app -->
+    <link rel="stylesheet" href="{% static "quiz/style.css" %}">
+{% endblock %}
+
+{% block body %}
+<br>
+<div id="app">
+    <div class="col-md-6 mx-auto">
+        <!-- Display the quiz name -->
+        <h3>{{ quiz }}</h3>
+
+        <!-- Check if the user is authenticated and has passed the quiz -->
+        {% if user.is_authenticated and quiz in user.passed_quizzes.all %}
+            <p>Congratulations! You have passed this quiz.</p>
+        {% endif %}
+
+        <hr>
+        
+        <!-- Loop through each question in the quiz -->
+        <div v-for="question in questions" :key="question.uid">
+            <p>[[question.question]]</p>
+
+            <!-- Loop through each answer for the current question -->
+            <div class="form-check" v-for="(answer, index) in question.answers" :key="index">
+                <!-- Radio button for selecting the answer -->
+                <input
+                    @change="checkAnswer($event, question.uid)"
+                    :value="answer.answer"
+                    class="form-check-input"
+                    type="radio"
+                    :name="'exampleRadios' + question.uid"
+                    :id="'exampleRadios' + question.uid + '_' + index"
+                    :disabled="quizFinished"
+                >
+                <!-- Label for the answer option -->
+                <label :for="'exampleRadios' + question.uid + '_' + index" class="form-check-label">
+                    [[answer.answer]]
+                </label>
+            </div>
+
             <hr>
-            <div v-for="question in questions" :key="question.uid">
-                <p>[[question.question]]</p>
-                <div class="form-check" v-for="(answer, index) in question.answers" :key="index">
-                    <input
-                        @change="checkAnswer($event, question.uid)"
-                        :value="answer.answer"
-                        class="form-check-input"
-                        type="radio"
-                        :name="'exampleRadios' + question.uid"
-                        :id="'exampleRadios' + question.uid + '_' + index"
-                        :disabled="quizFinished"
-                    >
-                    <label :for="'exampleRadios' + question.uid + '_' + index" class="form-check-label">
-                        [[answer.answer]]
-                    </label>
-                </div>
-                <hr>
-            </div>
-            <button class="btn" @click="finishQuiz" :disabled="quizFinished">Finish</button>
-            <div v-if="quizFinished">
-                <h4>Your Score: [[score]] out of [[maxScore]]</h4>
-            </div>
+        </div>
+
+        <!-- Button to finish the quiz -->
+        <button class="btn" @click="finishQuiz" :disabled="quizFinished">Finish</button>
+
+        <!-- Display the user's score if the quiz is finished -->
+        <div v-if="quizFinished">
+            <h4>Your Score: [[score]] out of [[maxScore]]</h4>
         </div>
     </div>
-    
-    <br>
-    {% endblock %}
+</div>
 
-    {% block extraScript %}
-    {% load static %}
-    <script>
-        var app = new Vue({
-            el: '#app',
-            delimiters: ['[[', ']]'],
-            data() {
-                return {
-                    quiz : '{{ quiz }}',
-                    questions : [],
-                    score: 0,
-                    quizFinished: false,
-                    maxScore: 0
-                }
+<br>
+{% endblock %}
+
+{% block extraScript %}
+{% load static %}
+<script>
+    var app = new Vue({
+        el: '#app',
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                // Data properties for Vue.js
+                quiz : '{{ quiz }}',
+                questions : [],
+                score: 0,
+                quizFinished: false,
+                maxScore: 0
+            }
+        },
+        methods : {
+            // Method to fetch quiz questions from the API
+            getQuestions(){
+                var _this = this
+                fetch(`/quiz/api/get-quiz/?quiz=${_this.quiz}`)
+                .then(response => response.json())
+                .then(result =>{
+                    console.log(result)
+                    _this.questions = result.data
+                });
             },
-            methods : {
-                getQuestions(){
-                    var _this = this
-                    fetch(`/quiz/api/get-quiz/?quiz=${_this.quiz}`)
-                    .then(response => response.json())
-                    .then(result =>{
-                        console.log(result)
-                        _this.questions = result.data
-                    });
-                },
-                checkAnswer(event, uid){
-                    if (!this.quizFinished) {
-                        this.questions.map(question =>{
-                            answers = question.answers
-                            for(var i=0; i < answers.length; i++){
-                                if(answers[i].answer == event.target.value){
-                                    if(answers[i].is_correct){
-                                        console.log("Your answer is correct")
-                                        this.score++;
-                                    } else {
-                                        console.log("Your answer is incorrect")
-                                    }
+            // Method to check the selected answer and update the score
+            checkAnswer(event, uid){
+                if (!this.quizFinished) {
+                    this.questions.map(question =>{
+                        answers = question.answers
+                        for(var i=0; i < answers.length; i++){
+                            if(answers[i].answer == event.target.value){
+                                if(answers[i].is_correct){
+                                    this.score++;
                                 }
                             }
-                        })
-                    }
-                    console.log(event.target.value, uid)
-                },
-                finishQuiz(){
-                    this.maxScore = this.questions.length;
-                    this.quizFinished = true;
-                    console.log("Quiz finished. Your score: " + this.score);
-                    // You can perform additional actions here based on the quiz completion.
+                        }
+                    })
                 }
+                console.log(event.target.value, uid)
             },
-            created() {
-                this.getQuestions()
-            },
-        });
-    </script>
-    {% endblock %}
+            // Method to finish the quiz and display the score
+            finishQuiz(){
+                this.maxScore = this.questions.length;
+                this.quizFinished = true;
+                console.log("Quiz finished. Your score: " + this.score);
+            }
+        },
+        // Fetch quiz questions when the Vue instance is created
+        created() {
+            this.getQuestions()
+        },
+    });
+</script>
+{% endblock %}

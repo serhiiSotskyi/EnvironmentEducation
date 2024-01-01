@@ -3,12 +3,13 @@
 {% block body %}
 <section id="blog" class="py-5">
     <div class="container">
-        {% if request.user in article.readers.all %}
-            <p>You've already read this article.</p>
-        {% endif %}
+        <!-- Article title -->
         <h2 class="text-center mb-4">{{ article.title }}</h2>
+        <!-- Article image -->
         <img src="{{ article.image.url }}" alt="{{ article.title }}" class="img-fluid mb-4">
+        <!-- Article label or category -->
         <p>{{ article.label }}</p>
+        <!-- Full content of the article -->
         <p>{{ article.content }}</p>
     </div>
 </section>

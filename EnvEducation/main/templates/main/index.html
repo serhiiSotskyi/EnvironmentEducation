@@ -1,6 +1,7 @@
 {% extends "main/layout.html" %}
     {% block body %}
     
+    <!-- About Us Section -->
     <section id="about" class="py-5">
         <div class="container">
             <h2 class="text-center mb-4">About Us</h2>
@@ -16,12 +17,14 @@
         </div>
     </section>
     
+    <!-- Random Environmental Fact Section -->
     <section id="random-fact" class="py-5">
         <h2 class="text-center mb-4">Random Environmental Fact</h2>
         <p id="fact-text" class="text-center"></p>
         <button id="generate-fact" class="btn btn-primary d-block mx-auto mt-3">Generate Fact</button>
     </section>
 
+    <!-- Parental Recommendations Section -->
     <section id="parental-recommendations" class="py-5">
         <div class="container">
             <h2 class="text-center mb-4">Parental Recommendations</h2>
@@ -36,20 +39,20 @@
                 <div class="col-md-6">
                     <h4>Join Our Community</h4>
                     <p>Connect with other parents passionate about environmental education on our forum. Share ideas, ask questions, and support one another in raising environmentally conscious children.</p>
-                    <a href="#forum" class="btn btn-primary">Join the Forum</a>
+                    {% comment %} <a href="#forum" class="btn btn-primary">Join the Forum</a> {% endcomment %}
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Add more sections for features like games, creative tasks, quiz, blog, etc. -->
-
+    <!-- Contact Us Section -->
     <section id="contact" class="bg-light py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <h2 class="mb-4">Contact Us</h2>
-                    <form id="contactForm" mathod="POST">
+                    <!-- Contact form -->
+                    <form id="contactForm" method="POST">
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="name">Your Name</label>
@@ -66,6 +69,7 @@
                         <button type="submit" class="btn btn-primary">Send Message</button>
                     </form>
                 </div>
+                <!-- Contact information -->
                 <div class="col-md-6">
                     <h2 class="mb-4">Visit Us</h2>
                     <p>123 Green Street</p>
@@ -76,44 +80,11 @@
             </div>
         </div>
     </section>
-<!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $('#submitForm').click(function () {
-                // Get form data
-                var formData = {
-                    'name': $('#name').val(),
-                    'email': $('#email').val(),
-                    'message': $('#message').val(),
-                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
-                };
-                var csrftoken = getCookie('csrftoken');
-                // Send AJAX request
-                $.ajax({
-                    type: 'POST',
-                    url: '/submit_form/',  // Update with your actual URL
-                    data: formData,
-                    dataType: 'json',
-                    encode: true,
-                    headers: {
-                        'X-CSRFToken': csrftoken
-                    }
-                })
-                
-                .done(function (data) {
-                    console.log(data);
-                    // Handle success, e.g., show a success message to the user
-                })
-                .fail(function (data) {
-                    console.error(data);
-                    // Handle failure, e.g., show an error message to the user
-                });
-            });
-        });
-    </script>
+    <!-- jQuery Script -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+    <!-- JavaScript for Random Environmental Facts -->
     <script>
         // List of environmental facts
         const environmentalFacts = [

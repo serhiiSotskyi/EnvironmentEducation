@@ -1,6 +1,7 @@
-.btn{
+/* Styling for general buttons */
+.btn {
     background: #fff;
-    color:#222;
+    color: #222;
     font-weight: 500;
     width: 100%;
     border: 1px solid #222;
@@ -11,34 +12,46 @@
     cursor: pointer;
     transition: all 0.3s;
 }
-.btn:hover:not([disabled]){
+
+/* Button hover effect */
+.btn:hover:not([disabled]) {
     background: #007bff;
     color: #fff;
 }
-.btn:disabled{
-    cursor:no-drop;
+
+/* Disabled button styling */
+.btn:disabled {
+    cursor: no-drop;
 }
-#next-btn{
+
+/* Styling for the "Next" button */
+#next-btn {
     text-align: center;
     background-color: #FF69B4;
-    border-color: #FF69B4; 
-    color:#fff;
+    border-color: #FF69B4;
+    color: #fff;
     font-weight: 500;
     width: 150px;
     border: 0;
     padding: 10px;
     margin: 20px auto 0;
     border-radius: 4px;
-    cursor:pointer;
+    cursor: pointer;
     display: none;
 }
+
+/* Hover effect for the "Next" button */
 #next-btn:hover {
     background-color: #D4509B; /* Darker Pink on hover */
     border-color: #D4509B; /* Darker Pink on hover */
 }
-.correct{
+
+/* Styling for correct answer */
+.correct {
     background: #9aeabc;
 }
-.incorrect{
+
+/* Styling for incorrect answer */
+.incorrect {
     background: #ff9393;
 }

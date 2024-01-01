@@ -4,6 +4,7 @@
 <section id="submit-ideas" class="py-5 bg-light">
     <div class="container">
         <h2 class="text-center mb-4">Submit Your Ideas</h2>
+        <!-- Form for submitting ideas -->
         <form enctype="multipart/form-data" method="post" action="{% url 'creativeTask:index' %}">
             {% csrf_token %}
             
@@ -32,17 +33,17 @@
     </div>
 </section>
 
-
-
 <section id="submitted-data" class="py-5 submitted-data">
     <div class="container">
         <h2 class="text-center mb-4">Posts</h2>
+        <!-- Display submitted posts -->
         <div class="row">
-            {% for post in submitted_data %}
+            {% for post in submitted_data reversed %}
             <div class="col-md-12 mb-12">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">{{ post.name }}</h5>
+                        <p class="card-text">Posted on {{ post.submission_date }}</p>
                         <p class="card-text">Idea: {{ post.name_of_the_idea }}</p>
                         {% if post.text %}
                             <p>Text: {{ post.text }}</p>
@@ -58,148 +59,31 @@
     </div>
 </section> 
 
-<!-- Place this script at the end of the <body> section or use DOMContentLoaded -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var submitBtn = document.getElementById('submit-btn');
+<!-- JavaScript to validate form fields before submission -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var submitBtn = document.getElementById('submit-btn');
     
-            if (submitBtn) {
-                submitBtn.addEventListener('click', function (event) {
-                    var nameField = document.getElementById('{{ form.name.id_for_label }}');
-                    var ideaNameField = document.getElementById('{{ form.name_of_the_idea.id_for_label }}');
-                    var textField = document.getElementById('{{ form.text.id_for_label }}');
-                    var drawingField = document.getElementById('{{ form.drawing_file.id_for_label }}');
-    
-                    var name = nameField.value.trim();
-                    var ideaName = ideaNameField.value.trim();
-                    var text = textField.value.trim();
-                    var drawingFile = drawingField.value.trim();
-    
-                    if (!name || !ideaName || (!text && !drawingFile)) {
-                        alert('Please fill in all fields before submitting.');
-                        event.preventDefault();  // Prevent form submission if fields are not filled
-                    }
-                });
-            }
-        });
-    </script>
-    
+        if (submitBtn) {
+            submitBtn.addEventListener('click', function (event) {
+                var nameField = document.getElementById('{{ form.name.id_for_label }}');
+                var ideaNameField = document.getElementById('{{ form.name_of_the_idea.id_for_label }}');
+                var textField = document.getElementById('{{ form.text.id_for_label }}');
+                var drawingField = document.getElementById('{{ form.drawing_file.id_for_label }}');
 
+                // Retrieve values from form fields
+                var name = nameField.value.trim();
+                var ideaName = ideaNameField.value.trim();
+                var text = textField.value.trim();
+                var drawingFile = drawingField.value.trim();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{% comment %} <section id="creative-tasks" class="py-5">
-    <div class="container">
-        <h2 class="text-center mb-4">Creative Tasks</h2>
-        <div class="row">
-            <!-- Add creative tasks here (as shown in the previous example) -->
-        </div>
-    </div>
-</section>
-
-<section id="submit-ideas" class="py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-4">Submit Your Ideas</h2>
-        {% if submitted %}
-                <p>Your form was submitted successfully!</p>
-            {% endif %}
-        <form enctype="multipart/form-data" method="post" action="{% url 'creativeTask:index' %}">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="category">Category</label>
-                <select class="form-control" id="category" name="category" required>
-                    <option value="" disabled selected>Select Category</option>
-                    <option value="Drawing">Drawing</option>
-                    <option value="Story">Story</option>
-                    <option value="Idea">Idea</option>
-                </select>
-            </div>
-            <div class="form-group" id="drawingField" style="display:none;">
-                <label for="drawingFile">Upload Drawing</label>
-                <input type="file" class="form-control-file" id="drawingFile" name="drawingFile">
-            </div>
-            <div class="form-group" id="textField" style="display:none;">
-                <label for="text">Your {category}</label>
-                <textarea class="form-control" id="text" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-</section>
-
-{% if submitted_data.name is not None %}
-                <div class="submitted-data">
-                    <h3>Submitted Data:</h3>
-                    <p>Name: {{ submitted_data.name }}</p>
-                    <p>Category: {{ submitted_data.category }}</p>
-                    {% if submitted_data.text is not None %}
-                    <p>Text: {{ submitted_data.text }}</p>
-                    {% endif %}
-                    {% if submitted_data.drawing_file is not None %}
-                    <p>Text: {{ submitted_data.drawing_file }}</p>
-                    {% endif %}
-                    <!-- Add other form fields as needed -->
-                </div>
-{% endif %} {% endcomment %}
-
-{% comment %} <script>
-    document.getElementById('category').addEventListener('change', function() {
-        var category = this.value;
-        var drawingField = document.getElementById('drawingField');
-        var textField = document.getElementById('textField');
-
-        if (category === 'Drawing') {
-            drawingField.style.display = 'block';
-            textField.style.display = 'none';
-        } else {
-            drawingField.style.display = 'none';
-            textField.style.display = 'block';
-            document.getElementById('text').setAttribute('placeholder', 'Your ' + category);
+                // Check if all required fields are filled
+                if (!name || !ideaName || (!text && !drawingFile)) {
+                    alert('Please fill in all fields before submitting.');
+                    event.preventDefault();  // Prevent form submission if fields are not filled
+                }
+            });
         }
     });
-</script>  {% endcomment %}
-
-
-    
-    {% endblock %}
+</script>
+{% endblock %}
