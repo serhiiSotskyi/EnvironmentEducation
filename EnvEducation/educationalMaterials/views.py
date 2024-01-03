@@ -11,7 +11,9 @@ def index(request):
 def article_detail(request, article_id):
     # Retrieve the specific article with the given ID or return a 404 page if not found
     article = get_object_or_404(Article, pk=article_id)
-    # Mark the article as read for the current user
-    article.readers.add(request.user)
+    # Check if the user is authenticated
+    if request.user.is_authenticated:
+        # Mark the article as read for the current user
+        article.readers.add(request.user)
     # Render the article detail page with the specific article
     return render(request, 'educationalMaterials/article_detail.html', {'article': article})
