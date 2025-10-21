@@ -19,6 +19,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    # Serve the main app at the site root and also under /main/
+    path("", include("main.urls")),
     path("main/", include("main.urls")),
     path("educationalMaterials/", include("educationalMaterials.urls")),
     path("creativeTask/", include("creativeTask.urls")),
