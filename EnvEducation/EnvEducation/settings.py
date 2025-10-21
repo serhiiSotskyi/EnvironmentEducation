@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-ke^87l^s(u80jod^un2+7p#1tsr9z5f@!3rmx+zg_4=k6zw$=i"
+# Read from environment; provide a dev-only fallback.
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-not-for-prod")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "True").strip().lower() in ("1", "true", "yes", "on")
 
-ALLOWED_HOSTS = []
+if DEBUG:
+    ALLOWED_HOSTS = ["*"]
+else:
+    _hosts = os.environ.get("ALLOWED_HOSTS", "")
+    ALLOWED_HOSTS = [h.strip() for h in _hosts.split(",") if h.strip()]
+
+# When using HTTPS hosts in production, set CSRF trusted origins.
+if not DEBUG:
+    CSRF_TRUSTED_ORIGINS = [
+        f"https://{h}"
+        for h in ALLOWED_HOSTS
+        if h and h != "*" and not h.startswith("http")
+    ] + [
+        h for h in ALLOWED_HOSTS if h.startswith("http")
+    ]
 
 
 # Application definition
@@ -130,11 +146,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "/static/"
+# Where collectstatic will gather files for production serving
+STATIC_ROOT = BASE_DIR / "staticfiles"
+# Include project-level static directory in addition to app static/
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 
 
